@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 
     public int speed;
 
+    public bool isRespawntime;
+
     Vector3 moveVelocity = Vector3.zero;
 
     private void Awake()
@@ -39,16 +41,27 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Wall" )
+        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Poop")
         {
-            speed = 0;
-            manager.GameOver();
+            if (!isRespawntime)
+            {
+                speed = 0;
+                manager.GameOver();
+            }
+            
         }
         if(collision.gameObject.tag == "Star")
         {
             Destroy(collision.gameObject);
             manager.Makepoop();
+            isRespawntime = true;
+            Invoke("Respawntimeset", 0.5f);
         }
+    } 
+
+    void Respawntimeset()
+    {
+        isRespawntime = false;
     }
 
 }

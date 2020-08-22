@@ -12,8 +12,10 @@ public class Gamemanager : MonoBehaviour
     public GameObject Star;
     public GameObject Poop;
 
-    Transform pos;
+    public bool[,] ispoop = new bool[16,8];
 
+    Transform pos;
+    
     public void GameOver()
     {
         overset.SetActive(true);
@@ -27,10 +29,20 @@ public class Gamemanager : MonoBehaviour
     public void Makestar()
     {
         int Ranpoint = Random.Range(0, 128);
-
+        int x;
+        int y;
+        x = Mathf.CeilToInt(spawnPoint[Ranpoint].position.x) + 7;
+        y = Mathf.CeilToInt(spawnPoint[Ranpoint].position.y) + 3;
+        while (ispoop[x,y])
+        {
+            Ranpoint = Random.Range(0, 128);
+            x = Mathf.CeilToInt(spawnPoint[Ranpoint].position.x) + 7;
+            y = Mathf.CeilToInt(spawnPoint[Ranpoint].position.y) + 3;
+        }
         GameObject star = Instantiate(Star, spawnPoint[Ranpoint].position, spawnPoint[Ranpoint].rotation);
         pos = spawnPoint[Ranpoint];
-        Rigidbody2D rigid = star.GetComponent<Rigidbody2D>();
+        ispoop[x, y] = true;
+        Rigidbody2D rigid = star.GetComponent<Rigidbody2D>();//is poop함수를 만듦
     }
 
     public void Makepoop()
@@ -38,4 +50,5 @@ public class Gamemanager : MonoBehaviour
         GameObject poop = Instantiate(Poop, pos.position, pos.rotation);
         Makestar();
     }
+    
 }
