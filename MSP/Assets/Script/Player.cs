@@ -34,20 +34,18 @@ public class Player : MonoBehaviour
         else if (Input.GetAxisRaw("Vertical") < 0)
             moveVelocity = Vector3.down;
         
-
+        
 
         transform.position += moveVelocity * speed * Time.deltaTime;
     }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Poop")
+        if (collision.gameObject.tag == "Wall" || (collision.gameObject.tag == "Poop"&&!isRespawntime))
         {
-            if (!isRespawntime)
-            {
                 speed = 0;
                 manager.GameOver();
-            }
             
         }
         if(collision.gameObject.tag == "Star")
