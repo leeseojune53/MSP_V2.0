@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Gamemanager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Gamemanager : MonoBehaviour
     public Transform[] spawnPoint;
     public GameObject Star;
     public GameObject Poop;
+
+    public Text scoreText;
 
     public bool[,] ispoop = new bool[16,8];
 
@@ -49,6 +52,11 @@ public class Gamemanager : MonoBehaviour
     {
         GameObject poop = Instantiate(Poop, pos.position, pos.rotation);
         Makestar();
+    }
+
+    public void UpdateScore(int score)
+    {
+        scoreText.text = score.ToString();
     }
     
 }

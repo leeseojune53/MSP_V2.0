@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public Gamemanager manager;
 
     public int speed;
+    public int score = 0;
+    
 
     public bool isRespawntime;
 
@@ -18,7 +21,9 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space)){
+            manager.GameRetry();
+        }
         Move();
     }
 
@@ -51,9 +56,11 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "Star")
         {
             Destroy(collision.gameObject);
+            ++score;
+            manager.UpdateScore(score);
             manager.Makepoop();
             isRespawntime = true;
-            Invoke("Respawntimeset", 0.5f);
+            Invoke("Respawntimeset", 0.2f);
         }
     } 
 
